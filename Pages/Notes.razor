@@ -8,6 +8,11 @@
 
 @*Create button*@
 <a href="/create" class="create-button">Create</a>
+@*Search bar*@
+<input @oninput="Search" placeholder="Search..." class="search-input" />
+@*Notes counter*@
+<div class="notes-counter">Total notes: @noteModel.Count()</div>
+
 
 @if (noteModel != null && noteModel.Count > 0)
 {
@@ -29,13 +34,13 @@ else
 }
 
 @code{
-    public System.Collections.Generic.IList<NoteModel> noteModel;
+    public IList<NoteModel> noteModel;
 
     protected override void OnInitialized()
     {
         noteModel = Service.GetAllNotes();
     }
-    
+
     private async Task ConfirmDelete(NoteModel note)
     {
         var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete \"{note.NoteTitle}\"?");
@@ -56,6 +61,23 @@ else
                 StateHasChanged();
             }
         }
+    }
+
+    private async Task Search(ChangeEventArgs args)
+    {
+        var searchTerm = (string)args.Value;
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            noteModel = Service.GetAllNotes().Where(note =>
+            note.NoteTitle.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            note.NoteText.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+        ).ToList();
+        }
+        else
+        {
+            noteModel = Service.GetAllNotes();
+        }
+        StateHasChanged();
     }
 }
 

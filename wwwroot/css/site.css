@@ -100,6 +100,7 @@ a, .btn-link {
     text-decoration: none;
     font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
+    max-width:10%
 }
 .create-button:hover {
     background-color: #ddd;
@@ -119,17 +120,46 @@ a, .btn-link {
 }
 
 .delete-button {
-    background-color: #ff4d4d; /* червоний кол≥р фону */
-    color: white; /* б≥лий кол≥р тексту */
-    border: none; /* без рамки */
-    cursor: pointer; /* курсор у вигл€д≥ пальц€ */
-    margin-left: 10px; /* в≥дступ зл≥ва */
-    padding: 5px 10px; /* внутр≥шн≥й в≥дступ */
-    border-radius: 5px; /* закруглен≥ кути */
-    transition: background-color 0.3s; /* плавна зм≥на кольору фону */
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
     float: right;
 }
 
 .delete-button:hover {
-    background-color: #cc0000; /* темн≥ший червоний при наведенн≥ */
+    background-color: #cc0000;
+}
+
+.search-input {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 80%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.notes-counter {
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    display: inline-block;
+    float: right;
+    max-width: 10%;
 }
