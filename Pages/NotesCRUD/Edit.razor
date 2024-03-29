@@ -1,0 +1,46 @@
+﻿@page "/edit/{id}"
+@using QuantumPMTestTask.Data;
+@using QuantumPMTestTask.Services;
+@inject NoteService NoteService
+@inject NavigationManager NavigationManager
+<h3>Edit</h3>
+<EditForm Model="@note" OnValidSubmit="EditNote">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <InputText id="title" class="form-control" @bind-Value="@note.NoteTitle" />
+        <ValidationMessage For="@(() => note.NoteTitle)" class="text-danger" />
+    </div>
+
+    <div class="form-group">
+        <label for="text">Text:</label>
+        <InputTextArea id="text" class="form-control" @bind-Value="@note.NoteText" />
+        <ValidationMessage For="@(() => note.NoteText)" class="text-danger" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    <button type="button" class="btn btn-secondary mt-3 ml-2" @onclick="Cancel">Cancel</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    NoteModel note = new NoteModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        note = await Task.Run(() => NoteService.GetByIdAsync(Convert.ToInt32(Id)));
+    }
+
+    protected void EditNote()
+    {
+        NoteService.Update(note);
+        NavigationManager.NavigateTo("/notes");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/notes");
+    }
+}

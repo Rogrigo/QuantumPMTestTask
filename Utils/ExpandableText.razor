@@ -1,0 +1,33 @@
+﻿@using System
+@if (IsExpanded || Text.Length <= MaxVisibleCharacters)
+{
+    <div style="max-height: 200px; overflow-y: auto;">
+        @Text
+    </div>
+    @if (Text.Length > MaxVisibleCharacters)
+    {
+        <button class="btn btn-link p-0 align-baseline" @onclick="ToggleExpand">show less</button>
+    }
+}
+else
+{
+   @Text.Substring(0, MaxVisibleCharacters)
+
+    <text>...</text>
+    <button class="btn btn-link p-0 align-baseline" @onclick="ToggleExpand">more</button>
+}
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public int MaxVisibleCharacters { get; set; } = 100;
+
+    private bool IsExpanded { get; set; } = false;
+
+    private void ToggleExpand()
+    {
+        IsExpanded = !IsExpanded;
+    }
+}
